@@ -1,0 +1,103 @@
+[
+    {
+        "title": "moving a value from parent",
+        "json": {
+            "a": {
+                "b": {
+                    "c": {
+                        "x": 1,
+                        "y": 2
+                    }
+                }
+            }
+        },
+        "patch": [
+            { "op": "move", "from": "/a/b", "path": "/a/b/c/z" }
+        ]
+    },
+    {
+        "title": "moving to the same path",
+        "json": {
+            "a": {
+                "b": 123
+            }
+        },
+        "patch": [
+            { "op": "move", "from": "/a/b", "path": "/a/b" }
+        ],
+        "result": {
+            "a": {
+                "b": 123
+            }
+        }
+    },
+    {
+        "title": "copying a value",
+        "json": {
+            "foo": {
+                "bar": "baz",
+                "waldo": "fred"
+            },
+            "qux": {
+                "corge": "grault"
+            }
+        },
+        "patch": [
+            { "op": "copy", "from": "/foo/waldo", "path": "/qux/thud" }
+        ],
+        "result": {
+            "foo": {
+                "bar": "baz",
+                "waldo": "fred"
+            },
+            "qux": {
+                "corge": "grault",
+                "thud": "fred"
+            }
+        }
+    },
+    {
+        "title": "copying an array element",
+        "json": {
+            "foo": [ "all", "grass", "cows", "eat" ]
+        },
+        "patch": [
+            { "op": "copy", "from": "/foo/1", "path": "/foo/3" }
+        ],
+        "result": {
+            "foo": [ "all", "grass", "cows", "grass", "eat" ]
+        }
+    },
+    {
+        "title": "copying a value from parent",
+        "json": {
+            "a": {
+                "b": {
+                    "c": {
+                        "x": 1,
+                        "y": 2
+                    }
+                }
+            }
+        },
+        "patch": [
+            { "op": "copy", "from": "/a/b", "path": "/a/b/c/z" }
+        ],
+        "result": {
+            "a": {
+                "b": {
+                    "c": {
+                        "x": 1,
+                        "y": 2,
+                        "z": {
+                            "c": {
+                                "x": 1,
+                                "y": 2
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+]
